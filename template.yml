@@ -32,11 +32,6 @@ Parameters:
     Description: Pattern for filtering log events
     Type: String
     Default: ERROR
-  OnlySendLogMessage:
-    Description: By default, this function will send the log message, id, and timestamp, unless this is set to True.
-    Type: String
-    Default: 'False'
-    AllowedValues: ['True','False']
 
 Globals:
   Function:
@@ -56,7 +51,6 @@ Resources:
       Environment:
         Variables:
           LAMBDA_NAME: !Ref DestinationFunctionName
-          MESSAGE_ONLY: !Ref OnlySendLogMessage
       Policies:
         - LambdaInvokePolicy:
             FunctionName: !Ref DestinationFunctionName

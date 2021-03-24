@@ -4,7 +4,6 @@ This can be used to define values for environment variables so unit tests can us
 """
 
 LAMBDA_NAME = 'name'
-MESSAGE_ONLY = 'False'
 
 AWS_LOG_EVENT = {
     "awslogs":

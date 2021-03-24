@@ -13,6 +13,8 @@ LOG = lambdalogging.getLogger(__name__)
 def logs_to_lambda(event, context):
     """Lambda function handler."""
     LOG.info('Received event: %s', event)
-    log_events = loghelpers.extract_log_events(event)
-    messages = loghelpers.condense_log_events(log_events)
+    log_stream, log_events = loghelpers.extract_log_events(event)
+
+    messages = loghelpers.condense_log_events(log_stream, log_events)
+
     lambdahelpers.send_message_array(messages)

@@ -2,7 +2,7 @@
 import base64
 import gzip
 import json
-import config
+from datetime import datetime
 
 ID = 'id'
 TIMESTAMP = 'timestamp'
@@ -15,16 +15,17 @@ def extract_log_events(event):
     compressed_data = base64.b64decode(log_data)
     decompressed_data = gzip.decompress(compressed_data)
     json_data = json.loads(decompressed_data)
+    log_stream = json_data['logStream']
     log_events = json_data['logEvents']
-    return log_events
+    return (log_stream, log_events)
 
 
-def condense_log_events(log_events):
-    """Condense log events into single strings."""
+def condense_log_events(log_stream, log_events):
+    """Condense log events into single strings. expects list of dicts."""
     condensed_events = []
     for event in log_events:
-        if config.MESSAGE_ONLY == 'False':
-            condensed_events.append(json.dumps(event))
-        else:
-            condensed_events.append(event.get(MESSAGE))
+        event_datetime = datetime.fromtimestamp(event['timestamp'] / 1000)
+        message = "{} | {} | {}".format(log_stream, event_datetime, event['message'])
+        condensed_events.append(message)
+
     return condensed_events

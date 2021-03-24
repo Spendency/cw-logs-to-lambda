@@ -11,4 +11,3 @@ sys.path.insert(0, my_path + '/../../src/')
 
 # set expected config environment variables to test constants
 os.environ['LAMBDA_NAME'] = test_constants.LAMBDA_NAME
-os.environ['MESSAGE_ONLY'] = test_constants.MESSAGE_ONLY
